@@ -3379,7 +3379,9 @@ function self_admin_url( $path = '', $scheme = 'admin' ) {
 function set_url_scheme( $url, $scheme = null ) {
 	$orig_scheme = $scheme;
 
-	if ( ! $scheme ) {
+	if (defined('FORCE_SCHEME') && FORCE_SCHEME) {
+	  $scheme = FORCE_SCHEME;
+	} elseif ( ! $scheme ) {
 		$scheme = is_ssl() ? 'https' : 'http';
 	} elseif ( $scheme === 'admin' || $scheme === 'login' || $scheme === 'login_post' || $scheme === 'rpc' ) {
 		$scheme = is_ssl() || force_ssl_admin() ? 'https' : 'http';
